@@ -20,6 +20,10 @@ Contact = ( function (self) {
         var mailList = [];
         var phoneList = [];
 
+        this.id = function() {
+            return id;
+        };
+
         this.gender = function () {
             return genre;
         };
@@ -50,8 +54,8 @@ Contact = ( function (self) {
 
         var init = function (_genre, _prenom, _nom) {
 
-            id = 'xxxx - xxxx - xxxx - xxxx - xxxx'.replace(/ x /g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x ' ? r : ( r & 0x3 | 0x8 );
+            id = 'xxxx-xxxx-xxxx-xxxx-xxxx'.replace(/x/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : ( r & 0x3 | 0x8 );
                 return v.toString(16);
             });
 
