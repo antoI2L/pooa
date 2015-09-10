@@ -12,27 +12,13 @@ Contact = ( function (self) {
         MME: 'mme'
     };
 
-    self.MailCategory = {
-        PERSO: 'perso',
-        PRO: 'pro'
-    };
-
-    self.PhoneCategory = {
-        PERSO: 'perso',
-        PRO: 'pro'
-    };
-
-    self.PhoneType = {
-        MOBILE: 'mobile',
-        FIXE: 'fixe'
-    };
-
     self.Contact = function (_genre, _prenom, _nom) {
-
         var id;
         var genre;
         var nom;
         var prenom;
+        var mailList = [];
+        var phoneList = [];
 
         this.gender = function () {
             return genre;
@@ -46,7 +32,20 @@ Contact = ( function (self) {
             return prenom;
         };
 
-        var process = function () {
+        this.mails = function() {
+            return mailList;
+        };
+
+        this.phones = function() {
+            return phoneList;
+        };
+
+        this.addMail = function(mail) {
+            mailList.push(mail);
+        };
+
+        this.addPhone = function(phone) {
+            phoneList.push(phone);
         };
 
         var init = function (_genre, _prenom, _nom) {
@@ -62,52 +61,6 @@ Contact = ( function (self) {
         };
 
         init(_genre, _prenom, _nom);
-    };
-
-    self.Mail = function(_mail, _category) {
-        var mail;
-        var category;
-
-        this.address = function() {
-            return mail;
-        };
-
-        this.category = function() {
-            return category;
-        };
-
-        var init = function(_mail, _category) {
-            mail = _mail;
-            category = _category;
-        };
-
-        init(_mail, _category);
-    };
-
-    self.Phone = function(_number, _category, _type) {
-        var number;
-        var category;
-        var type;
-
-        this.number = function() {
-            return number;
-        };
-
-        this.category = function() {
-            return category;
-        };
-
-        this.type = function() {
-            return type;
-        };
-
-        var init = function(_number, _category, _type) {
-            number = _number;
-            category = _category;
-            type = _type;
-        };
-
-        init(_number, _category, _type);
     };
 
     return self;
