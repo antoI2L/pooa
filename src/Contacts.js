@@ -26,6 +26,9 @@ Contact = ( function (self) {
         get: function(contactId) {
             return Contact.Contacts.list[contactId];
         },
+        search:function(strategy){
+            return strategy.search();
+        },
         getFromName: function(prenom, nom) {
             var contacts = [];
 
