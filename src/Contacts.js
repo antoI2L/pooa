@@ -27,7 +27,7 @@ Contact = ( function (self) {
             return Contact.Contacts.list[contactId];
         },
         search:function(strategy){
-            return strategy.search();
+            return strategy.search(Contact.Contacts.list);
         },
         getFromName: function(prenom, nom) {
             var contacts = [];
@@ -48,6 +48,20 @@ Contact = ( function (self) {
         remove: function(contactId) {
             delete Contact.Contacts.list[contactId];
             Contact.Contacts.len -= 1;
+        }
+    };
+
+    self.Contacts2 = function(){
+        var len= 0;
+        var list= {};
+
+        this.add=function(contact){
+            list[contact.id()] = contact;
+            len += 1;
+        }
+
+        this.search = function(strategy) {
+            return strategy.search(list);
         }
     };
 

@@ -232,7 +232,7 @@ ContactTestCase.prototype.testContactsProxy = function () {
 };
 
 // task 7
-ContactTestCase.prototype.testContactsProxy = function () {
+ContactTestCase.prototype.testContactsProxy2 = function () {
     var contacts1 = new Contact.Contacts2();
     var contacts2 = new Contact.Contacts2();
     var contacts3 = new Contact.Contacts2();
@@ -261,4 +261,32 @@ ContactTestCase.prototype.testContactsProxy = function () {
     var contact2 = proxyCache.search(strategy);
 
     assertEquals(contact2, null);
+};
+
+// task 8
+ContactTestCase.prototype.testContactsChain = function () {
+    var contacts1 = new Contact.Contacts2();
+    var contacts2 = new Contact.Contacts2();
+    var contacts3 = new Contact.Contacts2();
+    var handler3 = new Contact.Handler(contacts3, null);
+    var handler2 = new Contact.Handler(contacts2, handler3);
+    var handler1 = new Contact.Handler(contacts1, handler2);
+    var chain = new Contact.Chain(handler1);
+
+    chain.processRequest(new Contact.Request(
+        new Contact.Builder().createContactWithTag(
+            Contact.Gender.MR, 'Eric', 'RAMAT', 'prof')));
+    chain.processRequest(new Contact.Request(
+        new Contact.Builder().createContactWithTag(
+            Contact.Gender.MR, 'Pierre', 'DUPONT', 'student')));
+    chain.processRequest(new Contact.Request(
+        new Contact.Builder().createContactWithTag(
+            Contact.Gender.MR, 'Jean', 'DUPOND', 'admin')));
+    chain.processRequest(new Contact.Request(
+        new Contact.Builder().createContactWithTag(
+            Contact.Gender.MR, 'Jacques', 'DURAND', 'prof')));
+
+    assertEquals(contacts1.size(), 2);
+    assertEquals(contacts2.size(), 1);
+    assertEquals(contacts3.size(), 1);
 };

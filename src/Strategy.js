@@ -9,11 +9,11 @@ Contact = ( function (self) {
     self.FromNameSearchStrategy = function (_prenom, _nom) {
         var nom;
         var prenom;
-        this.search = function () {
+        this.search = function (contactList) {
             var contacts = [];
 
-            for (var row in Contact.Contacts.list) {
-                var contact = Contact.Contacts.list[row];
+            for (var row in contactList) {
+                var contact = contactList[row];
 
                 if (contact.firstName() === prenom && contact.lastName() === nom) {
                     contacts.push(contact);
@@ -36,10 +36,10 @@ Contact = ( function (self) {
 
     self.FromMailSearchStrategy = function (_mail) {
         var mail;
-        this.search = function () {
+        this.search = function (contactList) {
             var contacts = [];
-            for (var row in Contact.Contacts.list) {
-                var contact = Contact.Contacts.list[row];
+            for (var row in contactList) {
+                var contact = contactList[row];
                 var mails = contact.mails();
                 for (var i = 0; i < mails.length; i++) {
                     if (mails[i].address() === mail) {
@@ -63,10 +63,10 @@ Contact = ( function (self) {
 
     self.FromPhoneSearchStrategy = function (_phone) {
         var phone;
-        this.search = function () {
+        this.search = function (contactList) {
             var contacts = [];
-            for (var row in Contact.Contacts.list) {
-                var contact = Contact.Contacts.list[row];
+            for (var row in contactList) {
+                var contact = contactList[row];
                 var phones = contact.phones();
                 for (var i = 0; i < phones.length; i++) {
                     if (phones[i].number() === phone) {
