@@ -89,6 +89,29 @@ Contact = ( function (self) {
 
     };
 
+    self.ChangePhoneStrategy = function(_prenom, _nom, _ancienTel, _nouveauTel) {
+
+        var prenom;
+        var nom;
+        var ancienTel;
+        var nouveauTel;
+        var strategy;
+
+        this.strategy = function() {
+            return strategy;
+        };
+
+        var init = function (_prenom, _nom, _ancienTel, _nouveauTel) {
+            prenom = _prenom;
+            nom = _nom;
+            ancienTel = _ancienTel;
+            nouveauTel = _nouveauTel;
+            strategy = new Contact.FromPhoneSearchStrategy(ancienTel);
+        };
+
+        init(_prenom, _nom, _ancienTel, _nouveauTel);
+    };
+
     return self;
 }(Contact || {}) );
 

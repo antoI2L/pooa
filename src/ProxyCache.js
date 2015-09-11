@@ -9,6 +9,7 @@ Contact = ( function (self) {
     self.ProxyCache = function (_listContacts) {
         var listContacts = [];
         var cache = {};
+        var that = this;
 
         this.search = function (strategy) {
             if (this.inCache(strategy)) {
@@ -32,8 +33,17 @@ Contact = ( function (self) {
             return cache.hasOwnProperty(strategy)
         };
 
+        this.update = function (strategy) {
+            if (this.inCache(strategy)) {
+                cache[strategy] = null;
+            }
+        };
+
         var init = function (_listContacts) {
-            listContacts = _listContacts
+            for (var i = 0; i < _listContacts.length; i++) {
+                listContacts.push(_listContacts[i]);
+                _listContacts[i].attach(that);
+            }
         };
 
         init(_listContacts);

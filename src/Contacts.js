@@ -9,27 +9,27 @@ Contact = ( function (self) {
     self.Contacts = {
         len: 0,
         list: {},
-        instance: function() {
+        instance: function () {
             return Contact.Contacts;
         },
-        clear: function() {
+        clear: function () {
             Contact.Contacts.len = 0;
             Contact.Contacts.list = {};
         },
-        size: function() {
+        size: function () {
             return Contact.Contacts.len;
         },
-        add: function(contact) {
+        add: function (contact) {
             Contact.Contacts.list[contact.id()] = contact;
             Contact.Contacts.len += 1;
         },
-        get: function(contactId) {
+        get: function (contactId) {
             return Contact.Contacts.list[contactId];
         },
-        search:function(strategy){
+        search: function (strategy) {
             return strategy.search(Contact.Contacts.list);
         },
-        getFromName: function(prenom, nom) {
+        getFromName: function (prenom, nom) {
             var contacts = [];
 
             for (var row in Contact.Contacts.list) {
@@ -45,24 +45,35 @@ Contact = ( function (self) {
 
             return contacts;
         },
-        remove: function(contactId) {
+        remove: function (contactId) {
             delete Contact.Contacts.list[contactId];
             Contact.Contacts.len -= 1;
         }
     };
 
-    self.Contacts2 = function(){
-        var len= 0;
-        var list= {};
+    self.Contacts2 = function () {
+        var len = 0;
+        var list = {};
+        var observers = [];
 
-        this.add=function(contact){
+        this.add = function (contact) {
             list[contact.id()] = contact;
             len += 1;
-        }
+        };
 
-        this.search = function(strategy) {
+        this.search = function (strategy) {
             return strategy.search(list);
-        }
+        };
+
+        this.attach = function (object) {
+            observers.push(object);
+        };
+
+        this.change = function (strategy) {
+            for (var i = 0; i < observers.length; i++) {
+                observers[i].update(strategy.strategy());
+            }
+        };
     };
 
     return self;
