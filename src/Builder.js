@@ -7,27 +7,34 @@ var Contact = Contact || {};
 Contact = ( function (self) {
     "use strict";
 
-    self.Builder = function() {
+    self.Builder = function () {
 
-        this.createMinimalContact = function(genre, prenom, nom) {
+        this.createMinimalContact = function (genre, prenom, nom) {
             return new Contact.Contact(genre, prenom, nom);
         };
 
-        this.createContactWithProfessionalMail = function(genre, prenom, nom, mail) {
+        this.createContactWithProfessionalMail = function (genre, prenom, nom, mail) {
             var contact = this.createMinimalContact(genre, prenom, nom);
             contact.addMail(new Contact.Mail(mail, Contact.MailCategory.PRO));
 
             return contact;
         };
 
-        this.createContactWithProfessionalMobile = function(genre, prenom, nom, mobile) {
+        this.createContactWithProfessionalMobile = function (genre, prenom, nom, mobile) {
             var contact = this.createMinimalContact(genre, prenom, nom);
             contact.addPhone(new Contact.Phone(mobile, Contact.PhoneCategory.PRO, Contact.PhoneType.MOBILE));
 
             return contact;
         };
 
-        var init = function() {};
+        this.createContactWithTag = function (_genre, _prenom, _nom, _tag) {
+            var contact = this.createMinimalContact(_genre, _prenom, _nom);
+            contact.setTag(_tag);
+            return contact;
+        };
+
+        var init = function () {
+        };
 
         init();
     };

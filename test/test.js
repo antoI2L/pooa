@@ -248,12 +248,13 @@ ContactTestCase.prototype.testContactsProxy2 = function () {
         Contact.Gender.MR, 'Jacques', 'DURAND', '0699785487'));
 
     var strategy = new Contact.FromPhoneSearchStrategy('0612343000');
+    var strategy2 = new Contact.FromPhoneSearchStrategy('0612343000');
     var contact = proxyCache.search(strategy);
 
     assertTrue(typeof contact === 'object');
     assertEquals(contact.firstName(), 'Jean');
     assertEquals(contact.lastName(), 'DUPOND');
-    assertTrue(proxyCache.inCache(strategy));
+    assertTrue(proxyCache.inCache(strategy2));
 
     contacts2.change(new Contact.ChangePhoneStrategy('Jean', 'DUPOND',
         '0612343000', '0612343010'));

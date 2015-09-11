@@ -17,10 +17,11 @@ Contact = ( function (self) {
         var genre;
         var nom;
         var prenom;
+        var tag;
         var mailList = [];
         var phoneList = [];
 
-        this.id = function() {
+        this.id = function () {
             return id;
         };
 
@@ -36,20 +37,26 @@ Contact = ( function (self) {
             return prenom;
         };
 
-        this.mails = function() {
+        this.mails = function () {
             return mailList;
         };
 
-        this.phones = function() {
+        this.phones = function () {
             return phoneList;
         };
 
-        this.addMail = function(mail) {
+        this.addMail = function (mail) {
             mailList.push(mail);
         };
 
-        this.addPhone = function(phone) {
+        this.addPhone = function (phone) {
             phoneList.push(phone);
+        };
+        this.setTag = function (_tag) {
+            tag = _tag;
+        };
+        this.tag = function () {
+            return tag;
         };
 
         var init = function (_genre, _prenom, _nom) {

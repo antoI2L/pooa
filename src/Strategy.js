@@ -89,6 +89,32 @@ Contact = ( function (self) {
 
     };
 
+    self.FromTagSearchStrategy = function (_tag) {
+        var tag;
+
+        this.search = function (contactList) {
+            var contacts = [];
+            for (var row in contactList) {
+                var contact = contactList[row];
+                    if (contact.tag() === tag) {
+                        contacts.push(contact);
+                    }
+            }
+            if (contacts.length === 0) return null;
+            if (contacts.length === 1) return contacts[0];
+
+            return contacts;
+        };
+
+        var init = function (_tag) {
+            tag = _tag;
+
+        };
+
+        init(_tag);
+
+    };
+
     self.ChangePhoneStrategy = function(_prenom, _nom, _ancienTel, _nouveauTel) {
 
         var prenom;

@@ -69,6 +69,15 @@ Contact = ( function (self) {
             observers.push(object);
         };
 
+        this.clear = function () {
+            len = 0;
+            list = {};
+        };
+
+        this.size = function () {
+            return len;
+        };
+
         this.change = function (strategy) {
             for (var i = 0; i < observers.length; i++) {
                 observers[i].update(strategy.strategy());
