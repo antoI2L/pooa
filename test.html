@@ -51,7 +51,7 @@
             Contact.Contacts.instance().add(new Contact.Builder().createContactWithProfessionalMobile(
                     Contact.Gender.MR, 'Jacques', 'DURAND', '0699785487'));
 
-            Contact.Adapter.instance().save();
+            Contact.Storage.instance().save(Contact.Contacts);
             console.log(localStorage);
         }
     </script>
@@ -60,7 +60,7 @@
     <script>
         $(document).ready(function () {
             init();
-            //build();
+            build();
         });
     </script>
 
