@@ -4,13 +4,13 @@ Contact = ( function (self) {
     "use strict";
 
 
-    self.Request = function(_contact) {
+    self.Request = function (_contact) {
         var contact;
 
-        this.contact=function(){
+        this.contact = function () {
             return contact;
         };
-        var init = function(_contact) {
+        var init = function (_contact) {
             contact = _contact;
         };
 
@@ -18,6 +18,4 @@ Contact = ( function (self) {
     };
 
     return self;
-}(Contact || {}) );/**
- * Created by antony on 11/09/15.
- */
+}(Contact || {}) );

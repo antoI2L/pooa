@@ -52,9 +52,15 @@ Contact = ( function (self) {
         this.addPhone = function (phone) {
             phoneList.push(phone);
         };
+
         this.setTag = function (_tag) {
             tag = _tag;
         };
+
+        this.addTag = function (_tag) {
+            tag = _tag;
+        };
+
         this.tag = function () {
             return tag;
         };

@@ -48,6 +48,9 @@ Contact = ( function (self) {
         remove: function (contactId) {
             delete Contact.Contacts.list[contactId];
             Contact.Contacts.len -= 1;
+        },
+        iterator: function () {
+            return new Contact.ContactIterator(Contact.Contacts.list);
         }
     };
 
@@ -55,6 +58,10 @@ Contact = ( function (self) {
         var len = 0;
         var list = {};
         var observers = [];
+
+        this.getList = function () {
+            return list;
+        };
 
         this.add = function (contact) {
             list[contact.id()] = contact;

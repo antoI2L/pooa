@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Contacts</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+    <link rel="stylesheet" href="contact.css">
+    <script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="src/Phone.js"></script>
+    <script src="src/Mail.js"></script>
+    <script src="src/Contact.js"></script>
+    <script src="src/Contacts.js"></script>
+    <script src="src/Builder.js"></script>
+    <script src="src/ContactIterator.js"></script>
+    <script src="src/Adapter.js"></script>
+
+    <script src="src/View.js"></script>
+    <script src="src/Model.js"></script>
+    <script src="src/Controller.js"></script>
+
+    <!-- BEGIN - La fonction de construction -->
+    <script>
+        var build = function () {
+            var model = new Contact.Model();
+            var view = new Contact.View(model);
+            var controller = new Contact.Controller(model, view);
+        };
+
+        var init = function () {
+            var contact = new Contact.Builder().createContactWithProfessionalMobile(
+                    Contact.Gender.MR, 'Eric', 'RAMAT', '0616642258');
+
+            contact.addPhone(new Contact.Phone('0321465676', Contact.PhoneCategory.PRO, Contact.PhoneType.PHONE));
+            contact.addMail(new Contact.Mail('ramat@lisic.univ-littoral.fr', Contact.MailCategory.PRO));
+            contact.addMail(new Contact.Mail('eric.ramat@gmail.com', Contact.MailCategory.PERSO));
+            contact.addTag('prof');
+            Contact.Contacts.instance().add(contact);
+            Contact.Contacts.instance().add(new Contact.Builder().createContactWithProfessionalMobile(
+                    Contact.Gender.MR, 'Pierre', 'DUPONT', '0636532535'));
+            Contact.Contacts.instance().add(new Contact.Builder().createContactWithProfessionalMobile(
+                    Contact.Gender.MR, 'Jean', 'DUPOND', '0612343000'));
+            Contact.Contacts.instance().add(new Contact.Builder().createContactWithProfessionalMobile(
+                    Contact.Gender.MR, 'Jacques', 'DURAND', '0699785487'));
+
+            Contact.Adapter.instance().save();
+            console.log(localStorage);
+        }
+    </script>
+    <!-- END - La fonction de construction -->
+
+    <script>
+        $(document).ready(function () {
+            init();
+            //build();
+        });
+    </script>
+
+    <!-- BEGIN - Les tests -->
+    <script>
+        QUnit.test("header tests", function (assert) {
+            assert.equal($('tr th#cellFirstName').html(), 'First name');
+            assert.equal($('tr th#cellLastName').html(), 'Last name');
+            assert.equal($('tr th#cellPhones').html(), 'Phones');
+            assert.equal($('tr th#cellMails').html(), 'Mails');
+            assert.equal($('tr th#cellTags').html(), 'Tags');
+            assert.equal($('tr th#cellActions').html(), 'Actions');
+        });
+
+        QUnit.test("list tests", function (assert) {
+            var it = Contact.Contacts.instance().iterator();
+
+            while (it.hasNext()) {
+                var contact = it.next();
+
+                if (contact) {
+                    assert.equal($('tr#x' + contact.id() + ' td#cellFirstName').html(), contact.firstName());
+                    assert.equal($('tr#x' + contact.id() + ' td#cellLastName').html(), contact.lastName());
+                }
+            }
+        });
+
+        QUnit.test("first entry tests", function (assert) {
+            var it = Contact.Contacts.instance().iterator();
+            var contact = it.first();
+
+            assert.equal($('tr#x' + contact.id() + ' td#cellPhones').html(), '0616642258[PRO][MOBILE]/0321465676[PRO][PHONE]');
+            assert.equal($('tr#x' + contact.id() + ' td#cellMails').html(), 'ramat@lisic.univ-littoral.fr[PRO]/eric.ramat@gmail.com[PERSO]');
+            assert.equal($('tr#x' + contact.id() + ' td#cellTags').html(), 'prof');
+        });
+
+        QUnit.test("remove contact tests", function (assert) {
+            var it = Contact.Contacts.instance().iterator();
+            var contact = it.first();
+            var button = $('#button_' + contact.id());
+
+            button.click();
+
+            assert.equal($('tr#x' + contact.id() + ' td#cellFirstName').length, 0);
+            assert.equal($('td#cellFirstName').length, 3);
+            assert.equal(Contact.Contacts.instance().size(), 3);
+
+            it = Contact.Contacts.instance().iterator();
+            it.each(function (contact) {
+                assert.equal($('tr#x' + contact.id() + ' td#cellFirstName').html(), contact.firstName());
+                assert.equal($('tr#x' + contact.id() + ' td#cellLastName').html(), contact.lastName());
+            });
+        });
+
+    </script>
+    <!-- END - Les tests -->
+
+</head>
+<body>
+<div id="contacts"></div>
+<div id="qunit"></div>
+</body>
+</html>
