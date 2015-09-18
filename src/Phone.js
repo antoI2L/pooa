@@ -8,13 +8,13 @@ Contact = ( function (self) {
     "use strict";
 
     self.PhoneCategory = {
-        PERSO: 'perso',
-        PRO: 'pro'
+        PERSO: 'PERSO',
+        PRO: 'PRO'
     };
 
     self.PhoneType = {
-        MOBILE: 'mobile',
-        FIXE: 'fixe'
+        MOBILE: 'MOBILE',
+        PHONE: 'PHONE'
     };
 
     self.Phone = function(_number, _category, _type) {
@@ -32,6 +32,10 @@ Contact = ( function (self) {
 
         this.type = function() {
             return type;
+        };
+
+        this.toString = function() {
+            return number + "[" + category + "][" +  type + "]";
         };
 
         var init = function(_number, _category, _type) {

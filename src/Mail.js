@@ -8,8 +8,8 @@ Contact = ( function (self) {
     "use strict";
 
     self.MailCategory = {
-        PERSO: 'perso',
-        PRO: 'pro'
+        PERSO: 'PERSO',
+        PRO: 'PRO'
     };
 
     self.Mail = function(_mail, _category) {
@@ -27,6 +27,10 @@ Contact = ( function (self) {
         var init = function(_mail, _category) {
             mail = _mail;
             category = _category;
+        };
+
+        this.toString = function() {
+            return mail + "[" + category+ "]";
         };
 
         init(_mail, _category);

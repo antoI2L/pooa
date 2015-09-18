@@ -34,6 +34,10 @@ Contact = ( function (self) {
             return contacts[0];
         };
 
+        this.first = function () {
+            return contacts[0];
+        };
+
         this.current = function () {
             return contacts[index];
         };
