@@ -16,10 +16,10 @@ Contact = ( function (self) {
             instance = null;
         };
 
-        this.load = function(_contacts) {
-            for(var j=0 ; j< localStorage.length;j++ ){
+        this.load = function (_contacts) {
+            for (var j = 0; j < localStorage.length; j++) {
                 var obj = JSON.parse(localStorage.getItem(localStorage.key(j)));
-                var contact = new Contact.Contact(obj.genre,obj.firstName,obj.lastName);
+                var contact = new Contact.Contact(obj.genre, obj.firstName, obj.lastName);
                 contact.setId(obj.id);
                 contact.setTag(obj.tag);
 
@@ -48,12 +48,12 @@ Contact = ( function (self) {
                 var mails = [];
 
                 var phonesList = contact.phones();
-                for(var i=0;i<phonesList.length;i++){
+                for (var i = 0; i < phonesList.length; i++) {
                     phones.push(phonesList[i].toString());
                 }
 
                 var mailList = contact.mails();
-                for(var i=0;i<mailList.length;i++){
+                for (var i = 0; i < mailList.length; i++) {
                     mails.push(mailList[i].toString());
                 }
 

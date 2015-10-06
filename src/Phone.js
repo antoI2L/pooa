@@ -17,28 +17,28 @@ Contact = ( function (self) {
         PHONE: 'PHONE'
     };
 
-    self.Phone = function(_number, _category, _type) {
+    self.Phone = function (_number, _category, _type) {
         var number;
         var category;
         var type;
 
-        this.number = function() {
+        this.number = function () {
             return number;
         };
 
-        this.category = function() {
+        this.category = function () {
             return category;
         };
 
-        this.type = function() {
+        this.type = function () {
             return type;
         };
 
-        this.toString = function() {
-            return number + "[" + category + "][" +  type + "]";
+        this.toString = function () {
+            return number + "[" + category + "][" + type + "]";
         };
 
-        var init = function(_number, _category, _type) {
+        var init = function (_number, _category, _type) {
             number = _number;
             category = _category;
             type = _type;

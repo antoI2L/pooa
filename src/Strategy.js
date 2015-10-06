@@ -96,9 +96,9 @@ Contact = ( function (self) {
             var contacts = [];
             for (var row in contactList) {
                 var contact = contactList[row];
-                    if (contact.tag() === tag) {
-                        contacts.push(contact);
-                    }
+                if (contact.tag() === tag) {
+                    contacts.push(contact);
+                }
             }
             if (contacts.length === 0) return null;
             if (contacts.length === 1) return contacts[0];
@@ -115,7 +115,7 @@ Contact = ( function (self) {
 
     };
 
-    self.ChangePhoneStrategy = function(_prenom, _nom, _ancienTel, _nouveauTel) {
+    self.ChangePhoneStrategy = function (_prenom, _nom, _ancienTel, _nouveauTel) {
 
         var prenom;
         var nom;
@@ -123,7 +123,7 @@ Contact = ( function (self) {
         var nouveauTel;
         var strategy;
 
-        this.strategy = function() {
+        this.strategy = function () {
             return strategy;
         };
 

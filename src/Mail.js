@@ -12,25 +12,25 @@ Contact = ( function (self) {
         PRO: 'PRO'
     };
 
-    self.Mail = function(_mail, _category) {
+    self.Mail = function (_mail, _category) {
         var mail;
         var category;
 
-        this.address = function() {
+        this.address = function () {
             return mail;
         };
 
-        this.category = function() {
+        this.category = function () {
             return category;
         };
 
-        var init = function(_mail, _category) {
+        var init = function (_mail, _category) {
             mail = _mail;
             category = _category;
         };
 
-        this.toString = function() {
-            return mail + "[" + category+ "]";
+        this.toString = function () {
+            return mail + "[" + category + "]";
         };
 
         init(_mail, _category);

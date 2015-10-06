@@ -25,7 +25,7 @@ Contact = ( function (self) {
             return id;
         };
 
-        this.setId = function(_id) {
+        this.setId = function (_id) {
             id = _id;
         };
 
