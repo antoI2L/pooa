@@ -22,10 +22,15 @@ Contact = ( function (self) {
                 html += ""+contact.phones.toString().replace(',', '/');
                 html += "</td><td id='cellMails'>";
                 html += ""+contact.mails.toString().replace(',', '/');;
-                html += "</td><td id='cellTags'>" + contact.tag + "</td><td id='cellActions'><button id='button_'"+contact.id+">X</button></td></tr>";
+                html += "</td><td id='cellTags'>" + contact.tag + "</td><td id='cellActions'><button id='button_"+contact.id+"'>X</button></td></tr>";
             }
 
             $('#contacts').append(html + '</table>');
+
+        };
+
+        this.deleteRow = function (contactId) {
+            $('tr#x' + contactId).remove();
         };
 
 

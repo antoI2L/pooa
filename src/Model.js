@@ -18,6 +18,10 @@ Contact = ( function (self) {
             return contacts;
         };
 
+        this.deleteContact = function (contactId) {
+            Contact.Contacts.instance().remove(contactId);
+            localStorage.removeItem('contacts/' + contactId);
+        };
     };
 
     return self;

@@ -79,6 +79,7 @@ Contact = ( function (self) {
             genre = _genre;
             nom = _nom;
             prenom = _prenom;
+            tag = '';
         };
 
         init(_genre, _prenom, _nom);

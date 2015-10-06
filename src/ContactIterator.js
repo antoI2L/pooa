@@ -11,6 +11,12 @@ Contact = ( function (self) {
         var index;
         var total;
 
+        this.each = function (callback) {
+            for (var i = 0; i < contacts.length; i++) {
+                callback(contacts[i]);
+            }
+        };
+
         this.next = function () {
             var element;
 
