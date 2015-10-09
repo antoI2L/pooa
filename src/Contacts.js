@@ -66,6 +66,7 @@ Contact = ( function (self) {
         this.add = function (contact) {
             list[contact.id()] = contact;
             len += 1;
+            this.notifyAdd(contact);
         };
 
         this.search = function (strategy) {
@@ -90,6 +91,12 @@ Contact = ( function (self) {
                 observers[i].update(strategy.strategy());
             }
         };
+
+        this.notifyAdd = function (contact) {
+            for (var i = 0; i < observers.length; i++) {
+                observers[i].add(contact);
+            }
+        }
     };
 
     return self;

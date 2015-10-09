@@ -332,3 +332,76 @@ ContactTestCase.prototype.testContactsStorageLoad = function () {
     assertEquals(Contact.Contacts.instance().size(), 4);
     assertEquals(contact.id(), contact2.id());
 };
+
+ContactTestCase.prototype.testProxyCacheTree = function () {
+    var contacts1 = new Contact.Contacts2();
+    var contacts2 = new Contact.Contacts2();
+    var contacts3 = new Contact.Contacts2();
+    var proxyCache = new Contact.ProxyCache([contacts1, contacts2, contacts3]);
+
+    contacts1.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Eric', 'RAMAT', '0616642258'));
+    contacts2.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Pierre', 'DUPONT', '0636532535'));
+    contacts2.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Jean', 'DUPOND', '0612343000'));
+    contacts3.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Jacques', 'DURAND', '0699785487'));
+
+    var tree = proxyCache.getTree();
+
+    assertEquals(tree.getKey(), "0616642258");
+    assertEquals(tree.getContact().lastName(), "RAMAT");
+
+    assertEquals(tree.getLeftTree().getKey(), "0636532535");
+    assertEquals(tree.getLeftTree().getContact().lastName(), "DUPONT");
+
+    assertEquals(tree.getRightTree().getKey(), "0612343000");
+    assertEquals(tree.getRightTree().getContact().lastName(), "DUPOND");
+
+    assertEquals(tree.getLeftTree().getLeftTree().getKey(), "0699785487");
+    assertEquals(tree.getLeftTree().getLeftTree().getContact().lastName(), "DURAND");
+
+    var strategy = new Contact.FromPhoneSearchStrategy('0612343000');
+    var contact = proxyCache.searchTree(strategy);
+
+
+    assertTrue(typeof contact === 'object');
+    assertEquals(contact.firstName(), 'Jean');
+    assertEquals(contact.lastName(), 'DUPOND');
+    assertTrue(proxyCache.inCache(strategy));
+
+    var contact2 = proxyCache.search(strategy);
+
+    assertTrue(typeof contact2 === 'object');
+    assertEquals(contact2.firstName(), 'Jean');
+    assertEquals(contact2.lastName(), 'DUPOND');
+    assertTrue(proxyCache.inCache(strategy));
+
+};
+
+ContactTestCase.prototype.testPerformanceStrategy = function () {
+    var contacts1 = new Contact.Contacts2();
+    var contacts2 = new Contact.Contacts2();
+    var contacts3 = new Contact.Contacts2();
+    var proxyCache = new Contact.ProxyCache([contacts1, contacts2, contacts3]);
+
+    contacts1.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Eric', 'RAMAT', '0616642258'));
+    contacts2.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Pierre', 'DUPONT', '0636532535'));
+    contacts2.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Jean', 'DUPOND', '0612343000'));
+    contacts3.add(new Contact.Builder().createContactWithProfessionalMobile(
+        Contact.Gender.MR, 'Jacques', 'DURAND', '0699785487'));
+
+    var tree = proxyCache.getTree();
+
+    var strategy1 = new Contact.FromPhoneSearchStrategy('0612343000');
+    var strategy2 = new Contact.FromPhoneSearchStrategy('0612343000');
+
+    proxyCache.search(strategy1);
+    strategy2.searchTree(proxyCache.getTree());
+
+    assertTrue(strategy1.getIterations() > strategy2.getIterations());
+};

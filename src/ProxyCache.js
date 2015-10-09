@@ -10,6 +10,7 @@ Contact = ( function (self) {
         var listContacts = [];
         var cache = {};
         var that = this;
+        var tree = new Contact.Tree();
 
         this.search = function (strategy) {
             if (this.inCache(strategy)) {
@@ -29,6 +30,20 @@ Contact = ( function (self) {
             return res;
         };
 
+        this.searchTree = function (strategy) {
+            if (this.inCache(strategy)) {
+                return cache[strategy];
+            }
+
+            var contact = tree.search(strategy);
+
+            if (null !== contact) {
+                cache[strategy] = contact;
+            }
+
+            return contact;
+        };
+
         this.inCache = function (strategy) {
             return cache.hasOwnProperty(strategy)
         };
@@ -37,6 +52,14 @@ Contact = ( function (self) {
             if (this.inCache(strategy)) {
                 cache[strategy] = null;
             }
+        };
+
+        this.add = function (contact) {
+            tree.addContact(contact);
+        };
+
+        this.getTree = function () {
+            return tree;
         };
 
         var init = function (_listContacts) {

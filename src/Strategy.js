@@ -63,23 +63,51 @@ Contact = ( function (self) {
 
     self.FromPhoneSearchStrategy = function (_phone) {
         var phone;
+        var iterations = 0;
+
         this.search = function (contactList) {
+            iterations = 0;
             var contacts = [];
             for (var row in contactList) {
+                iterations++;
                 var contact = contactList[row];
                 var phones = contact.phones();
                 for (var i = 0; i < phones.length; i++) {
                     if (phones[i].number() === phone) {
                         contacts.push(contact);
                     }
+                    iterations++;
                 }
 
             }
             if (contacts.length === 0) return null;
             if (contacts.length === 1) return contacts[0];
 
+
             return contacts;
         };
+
+        this.searchTree = function (tree) {
+            iterations++;
+            if (phone == tree.getKey()) {
+                return tree.getContact();
+            }
+
+            if (phone < tree.getKey()) {
+                return this.searchTree(tree.getRightTree());
+            }
+
+            if (phone > tree.getKey()) {
+                return this.searchTree(tree.getLeftTree());
+            }
+
+            return null;
+        };
+
+        this.getIterations = function () {
+            return iterations;
+        };
+
         var init = function (_phone) {
             phone = _phone;
 
