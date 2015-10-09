@@ -333,6 +333,7 @@ ContactTestCase.prototype.testContactsStorageLoad = function () {
     assertEquals(contact.id(), contact2.id());
 };
 
+// Tâche 11
 ContactTestCase.prototype.testProxyCacheTree = function () {
     var contacts1 = new Contact.Contacts2();
     var contacts2 = new Contact.Contacts2();

@@ -30,7 +30,7 @@ Contact = ( function (self) {
                 }
                 for (i = 0; i < obj.mails.length; i++) {
                     var mail = obj.mails[i].split('[');
-                    contact.addPhone(new Contact.Mail(mail[0], mail[1].substring(0, mail[1].length - 1)));
+                    contact.addMail(new Contact.Mail(mail[0], mail[1].substring(0, mail[1].length - 1)));
                 }
 
                 _contacts.add(contact);
